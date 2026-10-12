@@ -6,32 +6,35 @@ CREATE TYPE userClass AS ENUM (
 
 
 CREATE TABLE players(
-    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY(1,1),
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username VARCHAR(25) NOT NULL UNIQUE,
     email VARCHAR(200) NOT NULL UNIQUE,
     password_hash varchar(255) NOT NULL,
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    party INT REFERENCES MembreParty(id),
+    character_id INT REFERENCES Character(id)
+);
+
+CREATE TABLE Party(
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nameParty VARCHAR(25) NOT NULL UNIQUE
 );
 
 CREATE TABLE MembreParty(
     players_id INT ,
-    Party_id INT,
+    party_id INT,
 
-    PRIMARY KEY(players_id, Party_id)
+    chef_players_id INT,
+    chef_party_id INT,
 
-    FOREIGN KEY (players_id) REFERENCES players(id)
-    FOREIGN KEY (Party_id) REFERENCES players(id)
-    FOREIGN KEY chef_party INT REFERENCES MembreParty(id),
-);
+    PRIMARY KEY(players_id, party_id),
 
-CREATE TABLE Party(
-    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY(1,1),
-    nameParty VARCHAR(25) NOT NULL UNIQUE,
+    FOREIGN KEY (players_id) REFERENCES players(id),
+    FOREIGN KEY (Party_id) REFERENCES Party(id),
+    FOREIGN KEY (chef_players_id, chef_party_id) REFERENCES MembreParty(players_id, party_id)
 );
 
 CREATE TABLE CharacterClass(
-    id INT PRIMARY KEY AUTOINCREMENT,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name userClass,
     description TEXT,
     base_health int,
@@ -40,7 +43,7 @@ CREATE TABLE CharacterClass(
 );
 
 CREATE TABLE Character(
-    id INT PRIMARY KEY AUTOINCREMENT,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     class_id INT REFERENCES CharacterClass(id),
     level int DEFAULT 1,
@@ -50,19 +53,19 @@ CREATE TABLE Character(
 );
 
 CREATE TABLE GameReplay(
-    id INT PRIMARY KEY AUTOINCREMENT,
-    1_1player_id INT REFERENCES players(id),
-    2_1player_id INT REFERENCES players(id),
-    3_1player_id INT REFERENCES players(id),
-    4_1player_id INT REFERENCES players(id),
-    5_1player_id INT REFERENCES players(id),
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    team1_player1_id INT REFERENCES players(id),
+    team1_player2_id INT REFERENCES players(id),
+    team1_player3_id INT REFERENCES players(id),
+    team1_player4_id INT REFERENCES players(id),
+    team1_player5_id INT REFERENCES players(id),
 
-    1_2player_id INT REFERENCES players(id),
-    2_2player_id INT REFERENCES players(id),
-    3_2player_id INT REFERENCES players(id),
-    4_2player_id INT REFERENCES players(id),
-    5_2player_id INT REFERENCES players(id),
+    team2_player1_id INT REFERENCES players(id),
+    team2_player2_id INT REFERENCES players(id),
+    team2_player3_id INT REFERENCES players(id),
+    team2_player4_id INT REFERENCES players(id),
+    team2_player5_id INT REFERENCES players(id),
 
     date_game TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    time_duration TIMESTAMP,
-)
+    time_duration TIMESTAMP
+);
