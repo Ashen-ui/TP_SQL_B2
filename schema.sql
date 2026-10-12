@@ -23,5 +23,21 @@ CREATE TABLE CharacterClass(
 );
 
 CREATE TABLE Character(
-    
+    id INT PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(100) NOT NULL,
+    class_id INT REFERENCES CharacterClass(id),
+    level int DEFAULT 1,
+    health int,
+    attack int,
+    defense int
+);
+
+CREATE TABLE CharacterList(
+    id INT PRIMARY KEY AUTOINCREMENT,
+    player_id INT REFERENCES players(id),
+    1_character_id INT REFERENCES Character(id),
+    2_character_id INT REFERENCES Character(id),
+    3_character_id INT REFERENCES Character(id),
+    4_character_id INT REFERENCES Character(id),
+    5_character_id INT REFERENCES Character(id)
 );
