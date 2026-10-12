@@ -11,6 +11,23 @@ CREATE TABLE players(
     email VARCHAR(200) NOT NULL UNIQUE,
     password_hash varchar(255) NOT NULL,
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    party INT REFERENCES MembreParty(id),
+);
+
+CREATE TABLE MembreParty(
+    players_id INT ,
+    Party_id INT,
+
+    PRIMARY KEY(players_id, Party_id)
+
+    FOREIGN KEY (players_id) REFERENCES players(id)
+    FOREIGN KEY (Party_id) REFERENCES players(id)
+    FOREIGN KEY chef_party INT REFERENCES MembreParty(id),
+);
+
+CREATE TABLE Party(
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY(1,1),
+    nameParty VARCHAR(25) NOT NULL UNIQUE,
 );
 
 CREATE TABLE CharacterClass(
