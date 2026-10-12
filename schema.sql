@@ -4,7 +4,7 @@ CREATE TYPE userClass AS ENUM(
     'Archer'
 );
 
-CREATE TABLE character_class(
+CREATE TABLE CharacterClass(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name userClass NOT NULL,
     base_health INT NOT NULL CHECK (base_health  > 0),
@@ -24,15 +24,15 @@ CREATE TABLE players(
     username VARCHAR(25)  NOT NULL UNIQUE,
     email VARCHAR(200) NOT NULL UNIQUE,
     registration_date DATE NOT NULL DEFAULT CURRENT_DATE,
-    class_id INT NOT NULL REFERENCES character_class(id),
+    class_id INT NOT NULL REFERENCES CharacterClass(id),
     party_id INT NOT NULL REFERENCES Party(id)
 );
 
-CREATE TABLE game_character(
+CREATE TABLE GameCharacter(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     player_id INT NOT NULL REFERENCES players(id),
     name VARCHAR(100) NOT NULL,
-    class_id INT NOT NULL REFERENCES character_class(id),
+    class_id INT NOT NULL REFERENCES CharacterClass(id),
     level INT NOT NULL DEFAULT 1 CHECK (level >= 1),
     health INT CHECK (health  >= 0),
     attack INT CHECK (attack  >= 0),
