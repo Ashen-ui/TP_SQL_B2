@@ -1,109 +1,113 @@
-INSERT INTO players (username, email, password_hash) VALUES
-    ('Alice', 'alice@example.com', 'hashed_password_1'),
-    ('Bob', 'bob@example.com', 'hashed_password_2'),
-    ('Charlie', 'charlie@example.com', 'hashed_password_3'),
-    ('David', 'david@example.com', 'hashed_password_4'),
-    ('Eve', 'eve@example.com', 'hashed_password_5'),
-    ('Frank', 'frank@example.com', 'hashed_password_6'),
-    ('Grace', 'grace@example.com', 'hashed_password_7'),
-    ('Heidi', 'heidi@example.com', 'hashed_password_8'),
-    ('Ivan', 'ivan@example.com', 'hashed_password_9'),
-    ('Jane', 'jane@example.com', 'hashed_password_10'),
-    ('Kate', 'kate@example.com', 'hashed_password_11'),
-    ('John', 'john@example.com', 'hashed_password_12'),
-    ('Julia', 'julia@example.com', 'hashed_password_13'),
-    ('Jacob', 'jacob@example.com', 'hashed_password_14'),
-    ('Liam', 'liam@example.com', 'hashed_password_15');
+INSERT INTO CharacterClass (name, base_health, base_attack, base_defense, health_per_level, attack_per_level, defense_per_level) VALUES
+    ('Warrior', 150, 20, 15, 10, 2, 5),
+    ('Mage', 80, 30, 5, 4, 10, 1),
+    ('Archer', 110, 22, 8, 6, 6, 3),
 
-INSERT INTO CharacterClass (name, description, base_health, base_attack, base_defense) VALUES
-    ('Warrior', 'Warrior class variant 1.', 150, 20, 15),
-    ('Mage', 'Mage class variant 1.', 80, 30, 5),
-    ('Archer', 'Archer class variant 1.', 110, 22, 8),
-    ('Warrior', 'Warrior class variant 2.', 155, 21, 15),
-    ('Mage', 'Mage class variant 2.', 82, 31, 5),
-    ('Archer', 'Archer class variant 2.', 112, 23, 8),
-    ('Warrior', 'Warrior class variant 3.', 160, 22, 16),
-    ('Mage', 'Mage class variant 3.', 84, 32, 6),
-    ('Archer', 'Archer class variant 3.', 114, 24, 9),
-    ('Warrior', 'Warrior class variant 4.', 165, 23, 16),
-    ('Mage', 'Mage class variant 4.', 86, 33, 6),
-    ('Archer', 'Archer class variant 4.', 116, 25, 9),
-    ('Warrior', 'Warrior class variant 5.', 170, 24, 17),
-    ('Mage', 'Mage class variant 5.', 88, 34, 7),
-    ('Archer', 'Archer class variant 5.', 118, 26, 10);
+INSERT INTO Party (name, parent_party_id) VALUES
+    ('Grand Alliance', NULL),
+    ('Northern Legion', 1),
+    ('Southern Pact', 1),
+    ('Frost Guard', 2),
+    ('Iron Wolves', 2),
+    ('Sand Riders', 3),
+    ('Sun Wardens', 3),
+    ('Free Companies', NULL),
+    ('Mercenary Band', 8),
+    ('Wandering Blades', 8),
+    ('Night Market', 10),
+    ('Silver Hand', 4),
+    ('Storm Brigade', 2),
+    ('Dawn Seekers', 7),
+    ('Lone Wolves', NULL);
 
-INSERT INTO Party (nameParty) VALUES
-    ('The Brave'),
-    ('Mystic'),
-    ('Shadow'),
-    ('Divine Force'),
-    ('The Forest'),
-    ('Storm'),
-    ('Phoenix'),
-    ('Guardians'),
-    ('Nightfall'),
-    ('Ironclad'),
-    ('Starlight'),
-    ('Wild Hunt'),
-    ('Eclipse'),
-    ('Silver Moon'),
-    ('Red Comets');
+INSERT INTO players (username, email, class_id, party_id) VALUES
+    ('Alice', 'alice@example.com', 1, 2),
+    ('Bob', 'bob@example.com', 2, 4),
+    ('Charlie', 'charlie@example.com', 3, 4),
+    ('David', 'david@example.com', 1, 5),
+    ('Eve', 'eve@example.com', 2, 3),
+    ('Frank', 'frank@example.com', 3, 6),
+    ('Grace', 'grace@example.com', 1, 7),
+    ('Heidi', 'heidi@example.com', 2, 7),
+    ('Ivan', 'ivan@example.com', 3, 9),
+    ('Jane', 'jane@example.com', 1, 10),
+    ('Kate', 'kate@example.com', 2, 11),
+    ('John', 'john@example.com', 3, 12),
+    ('Julia', 'julia@example.com', 1, 1),
+    ('Jacob', 'jacob@example.com', 2, 8),
+    ('Liam', 'liam@example.com', 3, 15);
 
-INSERT INTO MembreParty (players_id, Party_id, chef_party_id) VALUES
-    (1, 1, 1),
-    (2, 2, 2),
-    (3, 3, 3),
-    (4, 4, 4),
-    (5, 5, 5),
-    (6, 6, 6),
-    (7, 7, 7),
-    (8, 8, 8),
-    (9, 9, 9),
-    (10, 10, 10),
-    (11, 11, 11),
-    (12, 12, 12),
-    (13, 13, 13),
-    (14, 14, 14),
-    (15, 15, 15);
+INSERT INTO MemberParty (players_id, party_id, leader_id) VALUES
+    (13, 1, NULL),
+    (1, 2, NULL),
+    (5, 3, NULL),
+    (2, 4, NULL),
+    (3, 4, 2),
+    (4, 5, NULL),
+    (6, 1, 13),
+    (7, 7, NULL),
+    (8, 7, 7),
+    (9, 9, NULL),
+    (10, 10, NULL),
+    (11, 11, NULL),
+    (12, 1, 13),
+    (14, 8, NULL),
+    (15, 15, NULL);
 
-INSERT INTO Character (player_id, name, class_id, level, health, attack, defense) VALUES
-    (1, 'Alice', 1, 1, 150, 20, 15),
-    (2, 'Bob', 2, 1, 80, 30, 5),
-    (3, 'Charlie', 3, 1, 110, 22, 8),
-    (4, 'David', 4, 1, 155, 21, 15),
-    (5, 'Eve', 5, 1, 82, 31, 5),
-    (6, 'Frank', 6, 1, 112, 23, 8),
-    (7, 'Grace', 7, 2, 160, 22, 16),
-    (8, 'Heidi', 8, 2, 84, 32, 6),
-    (9, 'Ivan', 9, 2, 114, 24, 9),
-    (10, 'Jane', 10, 2, 165, 23, 16),
-    (11, 'Kate', 11, 2, 86, 33, 6),
-    (12, 'John', 12, 2, 116, 25, 9),
-    (13, 'Julia', 13, 2, 170, 24, 17),
-    (14, 'Jacob', 14, 2, 88, 34, 7),
-    (15, 'Liam', 15, 2, 118, 26, 10);
+INSERT INTO GameCharacter (player_id, name, class_id, level) VALUES
+    (1, 'Alice', 1, 1),
+    (2, 'Bob', 2, 1),
+    (3, 'Charlie', 3, 1),
+    (4, 'David', 1, 1),
+    (5, 'Eve', 2, 1),
+    (6, 'Frank', 3, 1),
+    (7, 'Grace', 1, 2),
+    (8, 'Heidi', 2, 2),
+    (9, 'Ivan', 3, 2),
+    (10, 'Jane', 1, 2),
+    (11, 'Kate', 2, 2),
+    (12, 'John', 3, 2),
+    (13, 'Julia', 1, 2),
+    (14, 'Jacob', 2, 2),
+    (15, 'Liam', 3, 2);
 
 SELECT setseed(0.42);
 
 INSERT INTO GameReplay (
-    "1_1player_id", "2_1player_id", "3_1player_id", "4_1player_id", "5_1player_id",
-    "1_2player_id", "2_2player_id", "3_2player_id", "4_2player_id", "5_2player_id",
+    team1_player1_id, team1_player2_id, team1_player3_id, team1_player4_id, team1_player5_id,
+    team2_player1_id, team2_player2_id, team2_player3_id, team2_player4_id, team2_player5_id,
     date_game, time_duration
 )
-SELECT participants.player_ids[1],
-       participants.player_ids[2],
-       participants.player_ids[3],
-       participants.player_ids[4],
-       participants.player_ids[5],
-       participants.player_ids[6],
-       participants.player_ids[7],
-       participants.player_ids[8],
-       participants.player_ids[9],
-       participants.player_ids[10],
-       DATE '2026-07-01' + ((replay_number - 1) % 92),
-       5 + floor(random() * 100)::int
+
+SELECT 
+    participants.player_ids[1],
+    participants.player_ids[2],
+    participants.player_ids[3],
+    participants.player_ids[4],
+    participants.player_ids[5],
+    participants.player_ids[6],
+    participants.player_ids[7],
+    participants.player_ids[8],
+    participants.player_ids[9],
+    participants.player_ids[10],    
+    DATE '2026-07-01' + ((replay_number - 1) % 92),
+    (5 + floor(random() * 100)::int) * INTERVAL '1 minute'
+
 FROM generate_series(1, 150) AS replay(replay_number)
 CROSS JOIN LATERAL (
-    SELECT array_agg(player_id ORDER BY random() * replay.replay_number) AS player_ids
+    SELECT array_agg(player_id ORDER BY random()) AS player_ids
     FROM generate_series(1, 15) AS available_players(player_id)
 ) AS participants;
+
+INSERT INTO GameScore (game_id, player_id, score) SELECT 
+    g.id,
+    slot.player_id,
+    floor(random() * 1000)::int
+
+FROM GameReplay g
+CROSS JOIN LATERAL (VALUES
+    (g.team1_player1_id), (g.team1_player2_id), (g.team1_player3_id),
+    (g.team1_player4_id), (g.team1_player5_id),
+    (g.team2_player1_id), (g.team2_player2_id), (g.team2_player3_id),
+    (g.team2_player4_id), (g.team2_player5_id)
+) AS slot(player_id);
