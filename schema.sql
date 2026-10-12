@@ -19,18 +19,18 @@ CREATE TABLE Party(
     nameParty VARCHAR(25) NOT NULL UNIQUE
 );
 
-CREATE TABLE MembreParty(
+CREATE TABLE MemberParty(
     players_id INT ,
     party_id INT,
 
-    chef_players_id INT,
-    chef_party_id INT,
+    leader_player_id INT,
+    leader_party_id INT,
 
     PRIMARY KEY(players_id, party_id),
 
     FOREIGN KEY (players_id) REFERENCES players(id),
     FOREIGN KEY (Party_id) REFERENCES Party(id),
-    FOREIGN KEY (chef_players_id, chef_party_id) REFERENCES MembreParty(players_id, party_id)
+    FOREIGN KEY (leader_player_id, leader_party_id) REFERENCES MemberParty(players_id, party_id)
 );
 
 CREATE TABLE CharacterClass(
