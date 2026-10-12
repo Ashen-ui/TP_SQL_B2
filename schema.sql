@@ -7,15 +7,16 @@ CREATE TYPE userClass AS ENUM(
 CREATE TABLE character_class(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name userClass NOT NULL,
-    base_health  INT NOT NULL,
-    base_attack  INT NOT NULL,
-    base_defense INT NOT NULL
+    base_health INT NOT NULL CHECK (base_health  > 0),
+    base_attack INT NOT NULL CHECK (base_attack  > 0),
+    base_defense INT NOT NULL CHECK (base_defense > 0)
 );
 
 CREATE TABLE Party(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
-    parent_party_id INT REFERENCES Party(id)
+    parent_party_id INT REFERENCES Party(id),
+    CHECK (parent_party_id <> id)
 );
 
 CREATE TABLE players(
@@ -27,15 +28,15 @@ CREATE TABLE players(
     party_id INT NOT NULL REFERENCES Party(id)
 );
 
-CREATE TABLE Character(
+CREATE TABLE game_character(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     player_id INT NOT NULL REFERENCES players(id),
     name VARCHAR(100) NOT NULL,
     class_id INT NOT NULL REFERENCES character_class(id),
-    level INT DEFAULT 1,
-    health INT,
-    attack INT,
-    defense INT
+    level INT NOT NULL DEFAULT 1 CHECK (level >= 1),
+    health INT CHECK (health  >= 0),
+    attack INT CHECK (attack  >= 0),
+    defense INT CHECK (defense >= 0)
 );
 
 CREATE TABLE GameReplay(
@@ -58,16 +59,15 @@ CREATE TABLE GameReplay(
 );
 
 CREATE TABLE MemberParty(
-    players_id INT ,
-    party_id INT,
-
+    players_id INT NOT NULL,
+    party_id INT NOT NULL,
     leader_player_id INT,
     leader_party_id INT,
 
-    PRIMARY KEY(players_id, party_id),
+    PRIMARY KEY (players_id, party_id),
 
     FOREIGN KEY (players_id) REFERENCES players(id),
-    FOREIGN KEY (Party_id) REFERENCES Party(id),
+    FOREIGN KEY (party_id) REFERENCES Party(id),
     FOREIGN KEY (leader_player_id, leader_party_id) REFERENCES MemberParty(players_id, party_id)
 );
 
