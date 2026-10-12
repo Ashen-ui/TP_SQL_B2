@@ -32,12 +32,20 @@ CREATE TABLE Character(
     defense int
 );
 
-CREATE TABLE CharacterList(
+CREATE TABLE GameReplay(
     id INT PRIMARY KEY AUTOINCREMENT,
-    player_id INT REFERENCES players(id),
-    1_character_id INT REFERENCES Character(id),
-    2_character_id INT REFERENCES Character(id),
-    3_character_id INT REFERENCES Character(id),
-    4_character_id INT REFERENCES Character(id),
-    5_character_id INT REFERENCES Character(id)
-);
+    1_1player_id INT REFERENCES players(id),
+    2_1player_id INT REFERENCES players(id),
+    3_1player_id INT REFERENCES players(id),
+    4_1player_id INT REFERENCES players(id),
+    5_1player_id INT REFERENCES players(id),
+
+    1_2player_id INT REFERENCES players(id),
+    2_2player_id INT REFERENCES players(id),
+    3_2player_id INT REFERENCES players(id),
+    4_2player_id INT REFERENCES players(id),
+    5_2player_id INT REFERENCES players(id),
+
+    date_game TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    time_duration TIMESTAMP,
+)
