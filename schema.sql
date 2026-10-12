@@ -59,16 +59,10 @@ CREATE TABLE GameReplay(
 );
 
 CREATE TABLE MemberParty(
-    players_id INT NOT NULL,
-    party_id INT NOT NULL,
-    leader_player_id INT,
-    leader_party_id INT,
-
-    PRIMARY KEY (players_id, party_id),
-
-    FOREIGN KEY (players_id) REFERENCES players(id),
-    FOREIGN KEY (party_id) REFERENCES Party(id),
-    FOREIGN KEY (leader_player_id, leader_party_id) REFERENCES MemberParty(players_id, party_id)
+    players_id INT NOT NULL REFERENCES players(id),
+    party_id INT NOT NULL REFERENCES Party(id),
+    leader_id INT NOT REFERENCES players(id),
+    PRIMARY KEY (players_id, party_id)
 );
 
 CREATE TABLE gameScore(
