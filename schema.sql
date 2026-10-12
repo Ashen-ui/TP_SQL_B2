@@ -6,7 +6,7 @@ CREATE TYPE userClass AS ENUM(
 
 CREATE TABLE CharacterClass(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name userClass NOT NULL,
+    name userClass NOT NULL UNIQUE,
     base_health INT NOT NULL CHECK (base_health  > 0),
     base_attack INT NOT NULL CHECK (base_attack  > 0),
     base_defense INT NOT NULL CHECK (base_defense > 0)
