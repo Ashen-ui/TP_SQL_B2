@@ -1,7 +1,7 @@
 INSERT INTO CharacterClass (name, base_health, base_attack, base_defense, health_per_level, attack_per_level, defense_per_level) VALUES
     ('Warrior', 150, 20, 15, 10, 2, 5),
     ('Mage', 80, 30, 5, 4, 10, 1),
-    ('Archer', 110, 22, 8, 6, 6, 3),
+    ('Archer', 110, 22, 8, 6, 6, 3);
 
 INSERT INTO Party (name, parent_party_id) VALUES
     ('Grand Alliance', NULL),
