@@ -1,46 +1,29 @@
-# Demo 3 - Les equipes et leurs sous-equipes
+# Demo 3 - Le classement des scores
 
 ## Question métier
 
-Quelles équipes dépendent d'autres équipes ?
+Quel est le classement des joueurs dans chaque partie ?
 
 ## Requête
 
 ```sql
-WITH RECURSIVE equipes AS (
-    SELECT id, name, parent_party_id, 1 AS niveau
-    FROM Party
-    WHERE parent_party_id IS NULL
-
-    UNION ALL
-
-    SELECT p.id, p.name, p.parent_party_id, e.niveau + 1
-    FROM Party p
-    JOIN equipes e ON p.parent_party_id = e.id
-)
-SELECT name, niveau
-FROM equipes;
+SELECT game_id, player_id, score,
+       RANK() OVER (PARTITION BY game_id ORDER BY score DESC) AS rang
+FROM GameScore;
 ```
 
 ## Principe
 
-La première partie trouve les équipes sans parent. La partie après `UNION ALL`
-cherche leurs sous-équipes. Elle recommence pour chaque niveau. La CTE
-`equipes` garde les résultats trouvés.
+La requête trie les scores du plus grand au plus petit. `PARTITION BY game_id`
+recommence le classement pour chaque partie. `RANK()` donne un rang à chaque
+score. Si deux joueurs ont le même score, ils ont le même rang.
 
 ## Résultat obtenu
 
-Une liste des équipes avec leur niveau : les équipes principales sont au niveau
-1, leurs sous-équipes au niveau 2, et ainsi de suite.
+La requête affiche le numéro de la partie, le joueur, son score et son rang.
+Les premiers rangs correspondent aux meilleurs scores de chaque partie.
 
 ## Difficulté rencontrée
 
-La récursivité était nouvelle pour moi. Le point difficile était de comprendre
-que la requête repart des équipes déjà trouvées pour chercher leurs enfants.
-
-## Difficulté générale du TP
-
-La principale difficulté a été de travailler avec des notions avancées que nous
-n'avions pas encore beaucoup étudiées, notamment les CTE, les fonctions de
-fenêtre et les requêtes récursives. J'ai dû les comprendre progressivement en
-partant de petits exemples.
+La fonction `RANK()` et `PARTITION BY` étaient nouvelles. Il fallait comprendre
+que le classement repart de 1 à chaque nouvelle partie.
